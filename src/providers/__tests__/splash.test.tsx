@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import { View } from 'react-native';
 
 import { SplashScreenProvider } from '../splash';
 
@@ -12,7 +13,12 @@ describe(SplashScreenProvider, () => {
 
   it('hides the splash screen when rendered', () => {
     expect(SplashScreen.hideAsync).not.toHaveBeenCalled();
-    render(<SplashScreenProvider />);
+    render(
+      <SplashScreenProvider>
+        <View />
+      </SplashScreenProvider>,
+    );
+
     expect(SplashScreen.hideAsync).toHaveBeenCalled();
   });
 });
