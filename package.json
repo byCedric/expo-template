@@ -47,14 +47,18 @@
   },
   "eslintConfig": {
     "extends": "universe/native",
+    "ignorePatterns": [
+      "node_modules",
+      "expo-env.d.ts"
+    ],
     "overrides": [
       {
-        "files": ["*.config.js"],
-        "extends": "universe/node"
+        "extends": "universe/node",
+        "files": ["*.config.js"]
       },
       {
-        "files": ["src/**/*.web.{js,ts,tsx}"],
-        "extends": "universe/web"
+        "extends": "universe/web",
+        "files": ["src/**/*.web.{js,ts,tsx}"]
       }
     ]
   },
