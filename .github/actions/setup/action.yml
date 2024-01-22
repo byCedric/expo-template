@@ -1,0 +1,38 @@
+name: setup project
+description: Prepare GitHub Actions for this project
+
+inputs:
+  bun-version:
+    description: Version of Bun to use
+    default: latest
+
+  node-version:
+    description: Version of Node to use
+    default: 20.x
+
+  eas-version:
+    description: Version of Expo Application Services (EAS) CLI to use
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: 🏗 Setup Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: ${{ inputs.bun-version }}
+
+    - name: 🏗 Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: 🏗 Setup EAS
+      if: ${{ inputs.eas-version }}
+      uses: expo/expo-github-action@v8
+      with:
+        eas-version: ${{ inputs.eas-version }}
+
+    - name: 📦 Install dependencies
+      run: bun install
+      shell: bash

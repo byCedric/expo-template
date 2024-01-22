@@ -1,0 +1,28 @@
+name: review
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches: [main]
+
+jobs:
+  code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repository
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup project
+        uses: ./.github/actions/setup
+
+      - name: 🚨 Lint project
+        run: bun run lint --max-warnings 0
+
+      - name: 🧪 Test project
+        run: bun run test
